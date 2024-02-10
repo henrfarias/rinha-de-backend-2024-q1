@@ -1,0 +1,8 @@
+{
+  "*.ts": [
+    "git add .",
+    "git stash",
+    "yarn test",
+    "git stash pop"
+  ]
+}
