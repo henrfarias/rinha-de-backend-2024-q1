@@ -17,7 +17,7 @@
   - [ ] Containerizar
   - [ ] docker-compose.yml (com limitações de CPU e memória)
   - [ ] README.md
-  
+
   > Arquitetura mínima da API
   - [ ] Load balancer - Round Robin - Porta 9999
   - [ ] 2 Instâncias de servidores web
