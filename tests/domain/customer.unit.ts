@@ -43,6 +43,16 @@ describe('Customer Entity', () => {
         sut.withdraw(2000)
       }).toThrow(new Error('WITHOUT_LIMIT'))
     })
+
+    test('should withdraw when result balance amount is greather than limit', () => {
+      const sut = new Customer({
+        id: 1,
+        balance: 12000,
+        limit: 10000,
+      })
+      sut.withdraw(1000)
+      expect(sut.balance).toBe(11000)
+    })
   })
 
   describe('Deposit', () => {
