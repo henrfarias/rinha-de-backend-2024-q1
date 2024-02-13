@@ -3,7 +3,7 @@ export enum TransactionType {
   DEBIT = 'd',
 }
 
-interface IInputCreateTransaction {
+export interface IInputCreateTransaction {
   amount: number
   type: TransactionType
   description: string

@@ -1,5 +1,6 @@
-import { Transaction, TransactionType } from '../../src/domain/transaction'
+import { TransactionType } from '../../src/domain/transaction'
 import { ExecuteTransaction } from '../../src/usecase/executeTransaction'
+import { createTransactionMock } from '../mocks/domain/factories/createTransaction.factory.mock'
 import {
   customerRepositoryMock,
   fakeCustomerEntity,
@@ -8,13 +9,21 @@ import { transactionRepositoryMock } from '../mocks/repositories/transactionRepo
 
 describe('Execute transaction use case', () => {
   beforeEach(() => {
-    jest.resetModules()
+    jest.restoreAllMocks()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
   })
   const transactionRepository = transactionRepositoryMock
   const customerRepository = customerRepositoryMock
-  const sut = new ExecuteTransaction(customerRepository, transactionRepository)
+  const createTransaction = createTransactionMock
+  const sut = new ExecuteTransaction(
+    createTransaction,
+    customerRepository,
+    transactionRepository,
+  )
   const fakeInput = {
-    amount: 1000,
+    amount: 5000,
     customerId: 2,
     description: 'Ow yeah',
     type: TransactionType.CREDIT,
@@ -34,9 +43,9 @@ describe('Execute transaction use case', () => {
     await expect(sut.exec(fakeInput)).rejects.toThrow('CUSTOMER_NOT_FOUND')
   })
 
-  test.skip('should create transaction with right params', async () => {
+  test('should create transaction with right params', async () => {
     await sut.exec(fakeInput)
-    expect(Transaction).toHaveBeenCalledWith({
+    expect(createTransaction).toHaveBeenCalledWith({
       customerId: fakeInput.customerId,
       amount: fakeInput.amount,
       description: fakeInput.description,
