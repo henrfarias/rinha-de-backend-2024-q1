@@ -1,5 +1,5 @@
-import { type ICustomerRepository } from '../../src/repositories/customerRepository'
-import { Customer } from '../../src/domain/customer'
+import { type ICustomerRepository } from '../../../src/repositories/customerRepository'
+import { Customer } from '../../../src/domain/customer'
 
 export const fakeCustomerEntity = new Customer({
   id: 1,

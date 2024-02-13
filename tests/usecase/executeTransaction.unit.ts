@@ -3,8 +3,8 @@ import { ExecuteTransaction } from '../../src/usecase/executeTransaction'
 import {
   customerRepositoryMock,
   fakeCustomerEntity,
-} from '../mocks/customerRepository.mock'
-import { transactionRepositoryMock } from '../mocks/transactionRepository.mock'
+} from '../mocks/repositories/customerRepository.mock'
+import { transactionRepositoryMock } from '../mocks/repositories/transactionRepository.mock'
 
 describe('Execute transaction use case', () => {
   beforeEach(() => {
