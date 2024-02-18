@@ -1,6 +1,6 @@
-import { type UseCase } from '../common/useCase'
-import { type ICreateTransaction } from '../domain/factories/createTransaction.factory'
-import { TransactionType } from '../domain/transaction'
+import { type UseCase } from '../../common/useCase'
+import { TransactionType } from '../entity/transaction'
+import { type ICreateTransaction } from '../factories/createTransaction.factory'
 import { type ICustomerRepository } from '../repositories/customerRepository'
 import { type ITransactionRepository } from '../repositories/transactionRepository'
 import {

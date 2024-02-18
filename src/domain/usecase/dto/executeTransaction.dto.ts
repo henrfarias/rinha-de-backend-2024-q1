@@ -1,4 +1,4 @@
-import { type TransactionType } from '../../domain/transaction'
+import { type TransactionType } from '../../entity/transaction'
 
 export interface InputExecuteTransactionDto {
   customerId: number

@@ -2,7 +2,7 @@ import { type ICreateTransaction } from '../../../../src/domain/factories/create
 import {
   type IInputCreateTransaction,
   Transaction,
-} from '../../../../src/domain/transaction'
+} from '../../../../src/domain/entity/transaction'
 
 export const createTransactionMock: jest.Mocked<ICreateTransaction> = jest
   .fn()

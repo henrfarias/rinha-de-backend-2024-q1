@@ -1,4 +1,4 @@
-import { Customer } from '../../src/domain/customer'
+import { Customer } from '../../src/domain/entity/customer'
 
 describe('Customer Entity', () => {
   describe('Withdraw', () => {

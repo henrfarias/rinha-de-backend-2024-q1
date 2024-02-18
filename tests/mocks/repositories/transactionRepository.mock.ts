@@ -1,5 +1,8 @@
-import { type ITransactionRepository } from '../../../src/repositories/transactionRepository'
-import { Transaction, TransactionType } from '../../../src/domain/transaction'
+import { type ITransactionRepository } from '../../../src/domain/repositories/transactionRepository'
+import {
+  Transaction,
+  TransactionType,
+} from '../../../src/domain/entity/transaction'
 
 export const fakeTransactionEntity = new Transaction({
   amount: 1000,

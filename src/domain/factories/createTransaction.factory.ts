@@ -1,4 +1,7 @@
-import { type IInputCreateTransaction, Transaction } from '../transaction'
+import {
+  type IInputCreateTransaction,
+  Transaction,
+} from '../entity/transaction'
 
 export type ICreateTransaction = (input: IInputCreateTransaction) => Transaction
 

@@ -1,5 +1,5 @@
-import { TransactionType } from '../../src/domain/transaction'
-import { ExecuteTransaction } from '../../src/usecase/executeTransaction'
+import { TransactionType } from '../../src/domain/entity/transaction'
+import { ExecuteTransaction } from '../../src/domain/usecase/executeTransaction'
 import { createTransactionMock } from '../mocks/domain/factories/createTransaction.factory.mock'
 import {
   customerRepositoryMock,
