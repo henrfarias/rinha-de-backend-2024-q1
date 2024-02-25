@@ -16,8 +16,10 @@ export class Customer {
   }
 
   withdraw(amount: number): void {
-    if (this.balance < 0 && Math.abs(this.balance - amount) > this.limit)
+    const amountAvailable = this.limit + this.balance
+    if (amount > amountAvailable) {
       throw new Error('WITHOUT_LIMIT')
+    }
     this.balance -= amount
   }
 

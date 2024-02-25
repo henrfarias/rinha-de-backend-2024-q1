@@ -20,29 +20,33 @@ export class ExecuteTransaction
   async exec(
     input: InputExecuteTransactionDto,
   ): Promise<OutputExecuteTransactionDto> {
-    const customer = await this.customerRepository.findById(input.customerId)
-    if (customer === null) throw new Error('CUSTOMER_NOT_FOUND')
-    const transaction = this.createTransaction({
-      customerId: input.customerId,
-      amount: input.amount,
-      description: input.description,
-      type: input.type,
-    })
-    console.log({ customer, transaction })
-    if (transaction.type === TransactionType.CREDIT)
-      customer.deposit(input.amount)
-    if (transaction.type === TransactionType.DEBIT)
-      customer.withdraw(input.amount)
-    await Promise.all([
-      this.customerRepository.update({
-        id: customer.id,
-        data: { balance: customer.balance },
-      }),
-      this.transactionRepository.create(transaction),
-    ])
-    return {
-      balance: customer.balance,
-      limit: customer.limit,
+    try {
+      const customer = await this.customerRepository.findById(input.customerId)
+      if (customer === null) throw new Error('CUSTOMER_NOT_FOUND')
+      const transaction = this.createTransaction({
+        customerId: input.customerId,
+        amount: input.amount,
+        description: input.description,
+        type: input.type,
+      })
+      if (transaction.type === TransactionType.CREDIT)
+        customer.deposit(input.amount)
+      if (transaction.type === TransactionType.DEBIT)
+        customer.withdraw(input.amount)
+      await Promise.all([
+        this.customerRepository.update({
+          id: customer.id,
+          data: { balance: customer.balance },
+        }),
+        this.transactionRepository.create(transaction),
+      ])
+      return {
+        balance: customer.balance,
+        limit: customer.limit,
+      }
+    } catch (err) {
+      await this.customerRepository.finishTransaction({ rollback: true })
+      throw err
     }
   }
 }
