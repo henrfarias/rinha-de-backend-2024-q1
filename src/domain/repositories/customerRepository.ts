@@ -5,9 +5,12 @@ export interface IInputUpdateCustomer {
   data: Partial<Customer>
 }
 
+export interface IInputFindCustomerBy {
+  id: number
+  lock?: boolean
+}
+
 export interface ICustomerRepository {
-  findById: (id: number) => Promise<Customer | null>
-  // getForUpdate connection('BEGIN')
-  // ERRO
-  update: (input: IInputUpdateCustomer) => Promise<Customer> // connection('COMMIT')
+  findById: (input: IInputFindCustomerBy) => Promise<Customer | null>
+  update: (input: IInputUpdateCustomer) => Promise<Customer>
 }

@@ -2,6 +2,7 @@ import { type UseCase } from '../../common/useCase'
 import { TransactionType } from '../entity/transaction'
 import { type ICreateTransaction } from '../factories/createTransaction.factory'
 import { type ICustomerRepository } from '../repositories/customerRepository'
+import { type IDatabaseRepository } from '../repositories/databaseRepository'
 import { type ITransactionRepository } from '../repositories/transactionRepository'
 import {
   type InputExecuteTransactionDto,
@@ -13,6 +14,7 @@ export class ExecuteTransaction
 {
   constructor(
     private readonly createTransaction: ICreateTransaction,
+    private readonly databaseRepository: IDatabaseRepository,
     private readonly customerRepository: ICustomerRepository,
     private readonly transactionRepository: ITransactionRepository,
   ) {}
@@ -21,7 +23,11 @@ export class ExecuteTransaction
     input: InputExecuteTransactionDto,
   ): Promise<OutputExecuteTransactionDto> {
     try {
-      const customer = await this.customerRepository.findById(input.customerId)
+      await this.databaseRepository.startTransaction()
+      const customer = await this.customerRepository.findById({
+        id: input.customerId,
+        lock: true,
+      })
       if (customer === null) throw new Error('CUSTOMER_NOT_FOUND')
       const transaction = this.createTransaction({
         customerId: input.customerId,
@@ -40,12 +46,13 @@ export class ExecuteTransaction
         }),
         this.transactionRepository.create(transaction),
       ])
+      await this.databaseRepository.finishTransaction()
       return {
         balance: customer.balance,
         limit: customer.limit,
       }
     } catch (err) {
-      await this.customerRepository.finishTransaction({ rollback: true })
+      await this.databaseRepository.finishTransaction({ rollback: true })
       throw err
     }
   }

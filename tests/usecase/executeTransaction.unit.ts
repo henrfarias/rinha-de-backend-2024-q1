@@ -5,6 +5,7 @@ import {
   customerRepositoryMock,
   createFakeCustomerEntity,
 } from '../mocks/repositories/customerRepository.mock'
+import { databaseRepositoryMock } from '../mocks/repositories/databaseRepository.mock'
 import { transactionRepositoryMock } from '../mocks/repositories/transactionRepository.mock'
 
 describe('Execute transaction use case', () => {
@@ -16,9 +17,12 @@ describe('Execute transaction use case', () => {
   })
   const transactionRepository = transactionRepositoryMock
   const customerRepository = customerRepositoryMock
+  const databaseRepository = databaseRepositoryMock
   const createTransaction = createTransactionMock
+
   const sut = new ExecuteTransaction(
     createTransaction,
+    databaseRepository,
     customerRepository,
     transactionRepository,
   )
