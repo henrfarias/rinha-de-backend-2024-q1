@@ -10,5 +10,5 @@ export const createFakeCustomerEntity = (): Customer =>
 
 export const customerRepositoryMock: jest.Mocked<ICustomerRepository> = {
   findById: jest.fn().mockResolvedValue(createFakeCustomerEntity()),
-  update: jest.fn().mockResolvedValue(createFakeCustomerEntity()),
+  update: jest.fn().mockResolvedValue(undefined),
 }

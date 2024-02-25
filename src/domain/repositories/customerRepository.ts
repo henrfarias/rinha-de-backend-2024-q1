@@ -12,5 +12,5 @@ export interface IInputFindCustomerBy {
 
 export interface ICustomerRepository {
   findById: (input: IInputFindCustomerBy) => Promise<Customer | null>
-  update: (input: IInputUpdateCustomer) => Promise<Customer>
+  update: (input: IInputUpdateCustomer) => Promise<void>
 }
