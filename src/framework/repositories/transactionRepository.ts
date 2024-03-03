@@ -9,7 +9,7 @@ export class TransactionRepository implements ITransactionRepository {
   async create(entity: Transaction): Promise<void> {
     await this.db.client.query(
       `
-      INSERT INTO ${this.tableName} (amount, type, description, customerId, createdAt)
+      INSERT INTO ${this.tableName} (amount, type, description, "customerId", "createdAt")
       VALUES ($1, $2, $3, $4, $5)
     `,
       [

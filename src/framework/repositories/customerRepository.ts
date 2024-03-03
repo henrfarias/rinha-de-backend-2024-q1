@@ -26,7 +26,7 @@ export class CustomerRepository implements ICustomerRepository {
     const fieldsValues = values.map(([, value]) => value)
 
     const sqlFields = values
-      .map(([key], index) => `${key} = $${index + 1}`)
+      .map(([key], index) => `"${key}" = $${index + 1}`)
       .join(',')
 
     const updatedCustomer = await this.db.client.query(

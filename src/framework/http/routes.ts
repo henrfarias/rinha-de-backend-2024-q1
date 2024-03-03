@@ -1,16 +1,24 @@
-import { type FastifyInstance } from 'fastify'
+import { type RouteHandler, type FastifyInstance } from 'fastify'
+import { clientParamSchema, executeTransactionBodySchema } from './schemas'
+import { type controllers } from './server'
 
-export default async function routes (fastify: FastifyInstance): Promise<void> {
-  fastify.post('/clientes/:clientId/transacoes', {schema: {params: {type: 'object',
-  properties: {
-    clientId: { type: 'string' },
-  }}}},async (request, reply) => {
-    const { clientId } = request.params
-    return { hello: 'world' }
-  })
+export default async function routes(
+  fastify: FastifyInstance,
+  opts: typeof controllers,
+): Promise<void> {
+  fastify.get('/eba', opts.ebaController)
 
-  fastify.get('/clientes/:clientId/extrato', async (request, reply) => {
-    const { clientId } = request.params
-    return { hello: 'world' }
-  })
+  fastify.post(
+    '/clientes/:clientId/transacoes',
+    {
+      schema: { params: clientParamSchema, body: executeTransactionBodySchema },
+    },
+    opts.executeTransactionController as RouteHandler,
+  )
+
+  fastify.get(
+    '/clientes/:clientId/extrato',
+    { schema: { params: clientParamSchema } },
+    opts.getStatementController,
+  )
 }
