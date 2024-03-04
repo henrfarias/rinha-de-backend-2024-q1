@@ -1,12 +1,12 @@
-import { TransactionType } from '../../src/domain/entity/transaction'
-import { ExecuteTransaction } from '../../src/domain/usecase/executeTransaction'
-import { createTransactionMock } from '../mocks/domain/factories/createTransaction.factory.mock'
+import { TransactionType } from '../../../src/domain/entity/transaction'
+import { ExecuteTransaction } from '../../../src/domain/usecase/executeTransaction'
+import { createTransactionMock } from '../../mocks/domain/factories/createTransaction.factory.mock'
 import {
   customerRepositoryMock,
   createFakeCustomerEntity,
-} from '../mocks/repositories/customerRepository.mock'
-import { databaseRepositoryMock } from '../mocks/repositories/databaseRepository.mock'
-import { transactionRepositoryMock } from '../mocks/repositories/transactionRepository.mock'
+} from '../../mocks/repositories/customerRepository.mock'
+import { databaseRepositoryMock } from '../../mocks/repositories/databaseRepository.mock'
+import { transactionRepositoryMock } from '../../mocks/repositories/transactionRepository.mock'
 
 describe('Execute transaction use case', () => {
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('Execute transaction use case', () => {
       customerId: 2,
     }
     await sut.exec(input)
-    expect(customerRepository.findById).toHaveBeenCalledWith(input.customerId)
+    expect(customerRepository.findById).toHaveBeenCalledWith({ id: input.customerId, lock: true })
   })
 
   test('should throw an error when customer wasn`t found', async () => {

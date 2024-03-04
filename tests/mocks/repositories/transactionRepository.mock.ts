@@ -13,5 +13,5 @@ export const fakeTransactionEntity = new Transaction({
 })
 
 export const transactionRepositoryMock: jest.Mocked<ITransactionRepository> = {
-  create: jest.fn().mockResolvedValue(fakeTransactionEntity),
+  create: jest.fn().mockResolvedValue(undefined),
 }
