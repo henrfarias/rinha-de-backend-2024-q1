@@ -15,7 +15,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
     await pool.end()
   })
   test('should return statusCode 422 when transaction type is unknown', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/1/transacoes')
       .body({
@@ -30,7 +30,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   })
 
   test('should return statusCode 422 when valor field is not provided', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/1/transacoes')
       .body({
@@ -44,7 +44,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   })
 
   test('should return statusCode 422 when descricao is an empty string', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/1/transacoes')
       .body({
@@ -59,7 +59,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   })
 
   test('should return statusCode 422 when clientId is an invalid argument', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/wrong/transacoes')
       .body({
@@ -74,7 +74,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   })
 
   test('should return statusCode 422 when valor field is zero', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/1/transacoes')
       .body({
@@ -87,7 +87,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   })
 
   test('should return statusCode 422 when valor field is zero', async () => {
-    const response = await fastify
+    const response: { body: string; statusCode: number } = await fastify
       .inject()
       .post('/clientes/1/transacoes')
       .body({
