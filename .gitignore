@@ -2,3 +2,5 @@ node_modules
 coverage
 .gitmessage
 .tool-versions
+.env*
+!.env.example

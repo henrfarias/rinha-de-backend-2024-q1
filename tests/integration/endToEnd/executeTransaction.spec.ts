@@ -1,7 +1,6 @@
-import { pool } from '../../../src/framework/database/db'
 import routes from '../../../src/framework/http/routes'
 import { build, controllers } from '../../../src/framework/http/server'
-import { down, up } from '../../utils/database-utils'
+import { down, testPool, up } from '../../utils/database-utils'
 jest.setTimeout(10 * 1000)
 
 describe('POST /clientes/:clientId/transacoes', () => {
@@ -15,7 +14,7 @@ describe('POST /clientes/:clientId/transacoes', () => {
   afterAll(async () => {
     await down()
     await fastify.close()
-    await pool.end()
+    await testPool.end()
   })
   test('should return statusCode 422 when transaction type is unknown', async () => {
     const response: { body: string; statusCode: number } = await fastify
@@ -105,13 +104,15 @@ describe('POST /clientes/:clientId/transacoes', () => {
   test('should return statusCode 200 with right balance and limit on body', async () => {
     const response = await fastify
       .inject()
-      .post('/clientes/1/transacoes')
+      .post('/clientes/2/transacoes')
       .body({
-        valor: 100,
+        valor: 20000,
         tipo: 'c',
         descricao: 'Teste',
       })
     expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual(JSON.stringify({ hello: 'world' }))
+    expect(response.body).toEqual(
+      JSON.stringify({ saldo: 20000, limit: 80000 }),
+    )
   })
 })

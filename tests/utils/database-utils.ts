@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises'
 
 export async function up(): Promise<void> {
   try {
+    console.log(process.env.DATABASE)
     console.log('up database...')
     const client = await pool.connect()
     const currentFile = __dirname
@@ -15,7 +16,7 @@ export async function up(): Promise<void> {
     client.release()
   } catch (err) {
     console.error(err)
-    process.exit(1)
+    // process.exit(1)
   }
 }
 
@@ -27,6 +28,8 @@ export async function down(): Promise<void> {
     client.release()
   } catch (err) {
     console.error(err)
-    process.exit(1)
+    // process.exit(1)
   }
 }
+
+export const testPool = pool
