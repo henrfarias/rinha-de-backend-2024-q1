@@ -11,6 +11,12 @@ describe('POST /clientes/:clientId/transacoes', () => {
     await fastify.listen({ port: 3000 })
     await fastify.ready()
   })
+
+  beforeEach(async () => {
+    await down()
+    await up()
+  })
+
   afterAll(async () => {
     await down()
     await fastify.close()
@@ -111,8 +117,32 @@ describe('POST /clientes/:clientId/transacoes', () => {
         descricao: 'Teste',
       })
     expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual(
-      JSON.stringify({ saldo: 20000, limit: 80000 }),
-    )
+    expect(JSON.parse(response.body)).toEqual({ saldo: 20000, limite: 80000 })
+  })
+
+  test('should return statusCode 200 and negative "saldo"', async () => {
+    const response = await fastify
+      .inject()
+      .post('/clientes/2/transacoes')
+      .body({
+        valor: 20000,
+        tipo: 'd',
+        descricao: 'Teste',
+      })
+    expect(response.statusCode).toBe(200)
+    expect(JSON.parse(response.body)).toEqual({ saldo: -20000, limite: 80000 })
+  })
+
+  test('should return statusCode 422 if customer did not have limit', async () => {
+    const response = await fastify
+      .inject()
+      .post('/clientes/2/transacoes')
+      .body({
+        valor: 100000,
+        tipo: 'd',
+        descricao: 'Teste',
+      })
+    expect(response.statusCode).toBe(422)
+    expect(JSON.parse(response.body)).toEqual({ message: 'WITHOUT_LIMIT' })
   })
 })

@@ -15,7 +15,7 @@ export function executeTransactionController() {
       Params: ClientParam
       Body: ExecuteTransactionBody
     }>,
-    _reply: FastifyReply,
+    reply: FastifyReply,
   ): HttpResponse => {
     let client: PoolClient | undefined
     try {
@@ -27,23 +27,22 @@ export function executeTransactionController() {
         type: request.body.tipo as TransactionType,
         description: request.body.descricao,
       })
-      return {
-        statusCode: 200,
-        body: {
-          limite: response.limit,
-          saldo: response.balance,
-        },
-      }
+      void reply
+        .status(200)
+        .send({ limite: response.limit, saldo: response.balance })
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === 'CUSTOMER_NOT_FOUND') {
-          return { statusCode: 404, body: { message: 'CUSTOMER_NOT_FOUND' } }
+          void reply.status(404).send({ message: 'CUSTOMER_NOT_FOUND' })
+          return
         }
         if (error.message === 'NO_CUSTOMER_UPDATED') {
-          return { statusCode: 404, body: { message: 'NO_CUSTOMER_UPDATED' } }
+          void reply.status(404).send({ message: 'NO_CUSTOMER_UPDATED' })
+          return
         }
         if (error.message === 'WITHOUT_LIMIT') {
-          return { statusCode: 422, body: { message: 'WITHOUT_LIMIT' } }
+          void reply.status(422).send({ message: 'WITHOUT_LIMIT' })
+          return
         }
       }
       console.log(error)
