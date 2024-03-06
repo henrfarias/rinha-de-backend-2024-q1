@@ -1,16 +1,19 @@
 import { pool } from '../../../src/framework/database/db'
 import routes from '../../../src/framework/http/routes'
 import { build, controllers } from '../../../src/framework/http/server'
+import { down, up } from '../../utils/database-utils'
 jest.setTimeout(10 * 1000)
 
 describe('POST /clientes/:clientId/transacoes', () => {
   const fastify = build()
   beforeAll(async () => {
+    await up()
     await fastify.register(routes, controllers)
     await fastify.listen({ port: 3000 })
     await fastify.ready()
   })
   afterAll(async () => {
+    await down()
     await fastify.close()
     await pool.end()
   })
