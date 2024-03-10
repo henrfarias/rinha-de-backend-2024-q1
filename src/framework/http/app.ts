@@ -35,7 +35,7 @@ export const controllers = {
 export const server = async (): Promise<void> => {
   const fastify = build({ logger: false })
   await fastify.register(routes, controllers)
-  fastify.listen({ port: 8000 }, (err, address) => {
+  fastify.listen({ port: 8000, host: '0.0.0.0' }, (err, address) => {
     if (err) {
       fastify.log.error(err)
       process.exit(1)
