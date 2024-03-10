@@ -4,3 +4,4 @@ coverage
 .tool-versions
 .env*
 !.env.example
+dist
