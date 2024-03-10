@@ -1,5 +1,6 @@
 import { type UseCase } from '../../common/useCase'
 import { type ICustomerRepository } from '../repositories/customerRepository'
+import { type IDatabaseRepository } from '../repositories/databaseRepository'
 import { type ITransactionRepository } from '../repositories/transactionRepository'
 import {
   type InputGetStatementDto,
@@ -10,11 +11,14 @@ export class GetStatement
   implements UseCase<InputGetStatementDto, OutputGetStatementDto>
 {
   constructor(
+    private readonly databaseRepository: IDatabaseRepository,
     private readonly customerRepository: ICustomerRepository,
     private readonly transactionRepository: ITransactionRepository,
   ) {}
 
   async exec(input: InputGetStatementDto): Promise<OutputGetStatementDto> {
+    await this.databaseRepository.startTransaction()
+
     const statementDate = new Date()
 
     const customer = await this.customerRepository.findById({
@@ -32,6 +36,8 @@ export class GetStatement
       },
       take: 10,
     })
+
+    await this.databaseRepository.finishTransaction()
 
     return { customer, lastTransactions, statementDate }
   }

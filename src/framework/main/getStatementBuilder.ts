@@ -11,6 +11,7 @@ export async function getStatementBuilder(
   const transactionRepository = new TransactionRepository(databaseRepository)
   const customerRepository = new CustomerRepository(databaseRepository)
   const getStatementUseCase = new GetStatement(
+    databaseRepository,
     customerRepository,
     transactionRepository,
   )
