@@ -15,7 +15,7 @@ export class CustomerRepository implements ICustomerRepository {
       `SELECT * FROM ${this.tableName} WHERE id = $1 ${input.lock ? 'FOR UPDATE' : ''}`,
       [input.id],
     )
-    return customer.rows[0] && new Customer(customer.rows[0])
+    return customer.rows[0] ? new Customer(customer.rows[0]) : null
   }
 
   async update(input: IInputUpdateCustomer): Promise<void> {
