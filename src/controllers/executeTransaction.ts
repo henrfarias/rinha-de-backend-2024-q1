@@ -45,7 +45,8 @@ export function executeTransactionController() {
           return
         }
       }
-      return { statusCode: 500, message: 'INTERNAL_ERROR' }
+      void reply.status(500).send({ message: 'INTERNAL_ERROR' })
+      return
     } finally {
       client?.release()
     }
