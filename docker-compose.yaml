@@ -4,7 +4,7 @@ name: rinha-2024q1
 services:
   api01: &api
     build: .
-    # image: ana/minha-api-matadora:latest
+    # image: henrbiasibetti/rinha-2024-q1:latest
     hostname: api01
     environment:
       - DATABASE=bank
