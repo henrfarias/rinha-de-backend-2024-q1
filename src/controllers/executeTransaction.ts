@@ -45,7 +45,6 @@ export function executeTransactionController() {
           return
         }
       }
-      console.log(error)
       return { statusCode: 500, message: 'INTERNAL_ERROR' }
     } finally {
       client?.release()
