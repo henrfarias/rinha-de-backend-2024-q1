@@ -1,5 +1,5 @@
 import routes from '../../../src/framework/http/routes'
-import { build, controllers } from '../../../src/framework/http/server'
+import { build, controllers } from '../../../src/framework/http/app'
 import { down, testPool, up } from '../../utils/database-utils'
 jest.setTimeout(10 * 1000)
 

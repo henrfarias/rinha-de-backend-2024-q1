@@ -1,6 +1,6 @@
 import { type RouteHandler, type FastifyInstance } from 'fastify'
 import { clientParamSchema, executeTransactionBodySchema } from './schemas'
-import { type controllers } from './server'
+import { type controllers } from './app'
 
 export default async function routes(
   fastify: FastifyInstance,

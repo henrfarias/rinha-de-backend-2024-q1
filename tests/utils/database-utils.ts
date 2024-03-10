@@ -4,7 +4,6 @@ import { readFile } from 'fs/promises'
 
 export async function up(): Promise<void> {
   try {
-    console.log('up database...')
     const client = await pool.connect()
     const currentFile = __dirname
     const cwd = dirname(currentFile)
@@ -21,7 +20,6 @@ export async function up(): Promise<void> {
 
 export async function down(): Promise<void> {
   try {
-    console.log('down database...')
     const client = await pool.connect()
     await client.query('DELETE FROM transactions; DELETE FROM customers;')
     client.release()
