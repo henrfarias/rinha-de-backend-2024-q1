@@ -9,6 +9,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "ignorePatterns": ["dist", "node_modules", "tests"],
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "import/first": "off"

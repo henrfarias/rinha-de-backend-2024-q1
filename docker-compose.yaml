@@ -3,8 +3,9 @@ version: "3.5"
 name: rinha-2024q1
 services:
   api01: &api
-    build: .
-    # image: henrbiasibetti/rinha-2024-q1:latest
+    # build: .
+    image: henrbiasibetti/rinha-2024-q1:latest
+    platform: linux/amd64
     hostname: api01
     environment:
       - DATABASE=bank
@@ -17,8 +18,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.53"
-          memory: "125MB"
+          cpus: "0.333"
+          memory: "50MB"
 
   api02:
     <<: *api
@@ -36,8 +37,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.12"
-          memory: "6MB"
+          cpus: "0.18"
+          memory: "27MB"
 
   db:
     image: postgres:latest
@@ -53,8 +54,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.32"
-          memory: "294MB"
+          cpus: "0.508"
+          memory: "379MB"
 
 networks:
   default:
